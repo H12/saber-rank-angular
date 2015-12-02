@@ -12,5 +12,9 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require twitter/bootstrap
 //= require turbolinks
+//= require angular
 //= require_tree .
+
+saberRank = angular.module('saberRank', []);

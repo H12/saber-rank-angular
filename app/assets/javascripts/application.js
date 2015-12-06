@@ -16,5 +16,3 @@
 //= require turbolinks
 //= require angular
 //= require_tree .
-
-saberRank = angular.module('saberRank', []);

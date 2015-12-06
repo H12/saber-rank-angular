@@ -3,14 +3,14 @@ class CreateBatters < ActiveRecord::Migration
     create_table :batters do |t|
       t.string  :name
       t.string  :team
-      t.float   :avg
+      t.string   :avg
       t.integer :hr
       t.integer :r
       t.integer :rbi
       t.integer :sb
-      t.float   :slg
-      t.float   :obp
-      t.float   :ops
+      t.string   :slg
+      t.string   :obp
+      t.string   :ops
       t.integer :so
       t.integer :singles
       t.integer :doubles

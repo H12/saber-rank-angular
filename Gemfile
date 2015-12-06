@@ -14,6 +14,7 @@ gem 'coffee-rails', '~> 4.1.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 gem 'angularjs-rails', '~> 1.4', '>= 1.4.7'
+gem 'angular-rails-templates', '~> 0.2.0'
 gem 'twitter-bootstrap-rails', '~> 3.2', '>= 3.2.2'
 
 # Use jquery as the JavaScript library

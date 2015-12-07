@@ -3,9 +3,8 @@ class Batter < ActiveRecord::Base
   BAD_STATS = [:so, :cs, :gdp]
 
   def as_json(options = {})
-    response = attributes.except('id', 'created_at', 'updated_at').merge(tb: tb, ppa: ppa, rc: rc, sbn: sbn, sac: sac, xbh: xbh)
-    if options[:stats]
-      options[:stats].each {|stat| response[:"n_#{stat.to_s}"] = normalized(stat)}
+    response = attributes.merge(tb: tb, ppa: ppa, rc: rc, sbn: sbn, sac: sac, xbh: xbh).select do |key|
+      (options[:stats].map { |stat| stat.to_s } + ['name', 'team']).include?(key)
     end
     response.each { |key, value| response[key] = sprintf('%.3f', value) if value.is_a?(Float) }
     options[:stats].each {|stat| response[:"n_#{stat.to_s}"] = normalized(stat)}

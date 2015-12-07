@@ -3,7 +3,7 @@ class BattersController < ApplicationController
     @batters = Batter.all
 
     respond_to do |format|
-      format.json { render :json => @batters, :stats => [:xbh]}
+      format.json { render :json => @batters, :stats => [:avg, :hr, :r, :rbi, :sb]}
     end
   end
 end

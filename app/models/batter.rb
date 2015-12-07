@@ -7,11 +7,14 @@ class Batter < ActiveRecord::Base
     if options[:stats]
       options[:stats].each {|stat| response[:"n_#{stat.to_s}"] = normalized(stat)}
     end
+    response.each { |key, value| response[key] = sprintf('%.3f', value) if value.is_a?(Float) }
+    options[:stats].each {|stat| response[:"n_#{stat.to_s}"] = normalized(stat)}
+
     response
   end
 
   def tb
-    singles + doubles*2 + triples * 3 + hr * 4
+    singles + doubles * 2 + triples * 3 + hr * 4
   end
 
   def ppa
@@ -35,8 +38,8 @@ class Batter < ActiveRecord::Base
   end
 
   def normalized(stat_method)
-    stats = Batter.all.map { |batter| batter.method(stat_method).call }
-    result = ((method(stat_method).call - stats.min).to_f / (stats.max - stats.min).to_f)
+    stats = Batter.all.map { |batter| batter.method(stat_method).call.to_f }
+    result = ((method(stat_method).call.to_f - stats.min) / (stats.max - stats.min))
 
     (BAD_STATS.include? stat_method) ? sprintf('%.2f', (1 - result)) : sprintf('%.2f', (result))
   end

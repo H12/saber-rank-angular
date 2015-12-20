@@ -22,7 +22,7 @@ class Batter < ActiveRecord::Base
   end
 
   def rc
-    r + rbi
+    r + rbi - hr
   end
 
   def sbn

@@ -4,9 +4,7 @@ class Batter < ActiveRecord::Base
 
   def as_json(options = {})
     response = {'name' => name, 'team' => team}
-    options[:stats].each do |stat|
-      response[stat] = method(stat).call
-    end
+    options[:stats].each { |stat| response[stat] = method(stat).call }
     response.each { |key, value| response[key] = sprintf('%.3f', value) if value.is_a?(Float) }
     stat_value = 0
     options[:stats].each do |stat|

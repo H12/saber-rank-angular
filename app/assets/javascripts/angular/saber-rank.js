@@ -1,11 +1,5 @@
 var app = angular.module('saberRank', []);
 
-// function BattersController($scope, initializer) {
-//   $scope.batter = initializer;
-// };
-
-// BattersController.$inject = ['$scope', 'saberRankInitializer'];
-
 app.controller('BattersController', ['$scope', 'batters', function($scope, batters) {
   batters.success(function(data) {
     $scope.batters = data;

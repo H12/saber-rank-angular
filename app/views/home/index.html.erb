@@ -7,7 +7,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="batter in batters">
+        <tr ng-repeat="batter in batters | orderBy:'-stat'">
           <td ng-repeat="(key, value) in batter">{{ value }}</td>
         </tr>
       </tbody>

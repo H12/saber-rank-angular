@@ -37,10 +37,38 @@ class Batter < ActiveRecord::Base
   end
 
   def normalized(stat_method)
-    stats = Batter.all.map { |batter| batter.method(stat_method).call.to_f }
-    result = ((method(stat_method).call.to_f - stats.min) / (stats.max - stats.min))
+    case stat_method
+    when :tb
+      min = stat_query("tb", "singles + doubles * 2 + triples * 3 + hr * 4", "min")
+      max = stat_query("tb", "singles + doubles * 2 + triples * 3 + hr * 4", "max")
+    when :ppa
+      min = stat_query("ppa", "pitches / pa", "min")
+      max = stat_query("ppa", "pitches / pa", "max")
+    when :rc
+      min = stat_query("rc", "r + rbi - hr", "min")
+      max = stat_query("rc", "r + rbi - hr", "max")
+    when :sbn
+      min = stat_query("sbn", "sb - cs", "min")
+      max = stat_query("sbn", "sb - cs", "max")
+    when :sac
+      min = stat_query("sac", "sh + sf", "min")
+      max = stat_query("sac", "sh + sf", "max")
+    when :xbh
+      min = stat_query("xbh", "doubles + triples + hr", "min")
+      max = stat_query("xbh", "doubles + triples + hr", "max")
+    else
+      min = Batter.minimum(stat_method)
+      max = Batter.maximum(stat_method)
+    end
 
+    result = ((method(stat_method).call.to_f - min) / (max - min))
     (BAD_STATS.include? stat_method) ? sprintf('%.2f', (1 - result)) : sprintf('%.2f', (result))
+  end
+
+  private
+
+  def stat_query(column_name, calculation, option)
+    ActiveRecord::Base.connection.execute("SELECT #{option}(#{calculation}) AS #{column_name} FROM batters")[0][column_name].to_f
   end
 
 end

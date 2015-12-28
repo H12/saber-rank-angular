@@ -8,7 +8,7 @@ class Batter < ActiveRecord::Base
     response.each { |key, value| response[key] = sprintf('%.3f', value) if value.is_a?(Float) }
     stat_value = 0
     options[:stats].each do |stat|
-      response[:"n_#{stat.to_s}"] = normalized(stat)
+      response[:"n_#{stat.to_s}"] = sprintf('%.2f', normalized(stat))
       stat_value += normalized(stat).to_f
     end
     response[:stat] = sprintf('%.2f', stat_value)
@@ -66,7 +66,7 @@ class Batter < ActiveRecord::Base
     end
 
     result = ((method(stat_method).call.to_f - min) / (max - min))
-    (BAD_STATS.include? stat_method) ? sprintf('%.2f', (1 - result)) : sprintf('%.2f', (result))
+    (BAD_STATS.include? stat_method) ? 1 - result : result
   end
 
   private

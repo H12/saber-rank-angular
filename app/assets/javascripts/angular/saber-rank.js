@@ -2,6 +2,17 @@ var app = angular.module('saberRank', []);
 
 app.controller('BattersController', ['$scope', 'batters', function($scope, batters) {
   batters.success(function(data) {
+    $scope.sortType = 'stat';
+    $scope.sortDesc = true;
+    $scope.changeSortType = function(statName) {
+      $scope.sortType = statName;
+    };
+    $scope.changeSortDesc = function(column) {
+      if ($scope.sortType == column) {
+        $scope.sortDesc = !$scope.sortDesc
+      }
+    };
+
     $scope.batters = data;
   });
 }]);

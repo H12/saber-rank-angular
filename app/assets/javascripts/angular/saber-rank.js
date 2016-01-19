@@ -12,7 +12,10 @@ app.controller('BattersController', ['$scope', 'batters', function($scope, batte
         $scope.sortDesc = !$scope.sortDesc
       }
     };
-
+    $scope.log = function(stats) {
+      console.log(stats);
+    };
+    $scope.stats = ['avg','hr','r','rbi','sb','slg','obp','ops','so','singles','doubles','triples','ab','bb','cs','gdp','h','hbp','ibb','pitches','pa','sf','sh','tb','ppa','rc','sbn','sac','xba']
     $scope.batters = data;
   });
 }]);

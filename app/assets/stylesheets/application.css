@@ -13,3 +13,21 @@
  *= require_tree .
  *= require_self
  */
+#available, #selected, #buttons {
+  width: 20%;
+  margin: 16px 5%;
+  float: left;
+}
+
+select {
+  height: 120px!important;
+}
+
+#buttons {
+  width: 10%;
+}
+
+#buttons button {
+  margin: 8px auto;
+  display: block;
+}

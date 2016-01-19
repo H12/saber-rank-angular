@@ -18,6 +18,13 @@ app.controller('BattersController', ['$scope', 'batters', function($scope, batte
         $("#selected select").append(optionsToAdd[i]);
       };
     };
+
+    $scope.removeOptions = function() {
+      var optionsToRemove = $("#selected").find("option:selected");
+      for (var i = 0; i < optionsToRemove.length; i++) {
+        $("#available select").append(optionsToRemove[i]);
+      };
+    };
     $scope.log = function(stats) {
       console.log(stats);
     };

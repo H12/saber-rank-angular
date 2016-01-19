@@ -12,6 +12,12 @@ app.controller('BattersController', ['$scope', 'batters', function($scope, batte
         $scope.sortDesc = !$scope.sortDesc
       }
     };
+    $scope.addOptions = function() {
+      var optionsToAdd = $("#available").find("option:selected");
+      for (var i = 0; i < optionsToAdd.length; i++) {
+        $("#selected select").append(optionsToAdd[i]);
+      };
+    };
     $scope.log = function(stats) {
       console.log(stats);
     };

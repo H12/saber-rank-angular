@@ -25,6 +25,11 @@ app.controller('BattersController', ['$scope', 'batters', function($scope, batte
         $("#available select").append(optionsToRemove[i]);
       };
     };
+    $scope.sortStatOptions = function(fieldId) {
+      var sorted = $(fieldId + " option").sort(function(a,b) {return $scope.stats.indexOf(a.innerHTML) - $scope.stats.indexOf(b.innerHTML);});
+      $(fieldId + " option").remove();
+      $(fieldId + " select").append(sorted);
+    };
     $scope.log = function(stats) {
       console.log(stats);
     };

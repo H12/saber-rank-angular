@@ -6,8 +6,8 @@
       </select>
     </div>
     <div id="buttons">
-      <button type="button" class="btn btn-success" ng-click="addOptions()">></button>
-      <button type="button" class="btn btn-danger" ng-click="removeOptions()"><</button>
+      <button type="button" class="btn btn-success" ng-click="addOptions(); sortStatOptions('#selected')">></button>
+      <button type="button" class="btn btn-danger" ng-click="removeOptions(); sortStatOptions('#available')"><</button>
       <button type="button" class="btn btn-primary">✓</button>
     </div>
     <div id="selected">

@@ -13,6 +13,9 @@ class Batter < ActiveRecord::Base
     end
     response['stat'] = ((stat_value * 60 / options[:stats].length) + 20).to_i
 
+    mappings = {'singles' => '1b', 'doubles' => '2b', 'triples' => '3b', 'pitches' => 'p', 'n_singles' => 'n_1b', 'n_doubles' => 'n_2b', 'n_triples' => 'n_3b', 'n_pitches' => 'n_p'}
+    response = response.map {|k,v| mappings.keys.include?(k) ? [mappings[k], v] : [k,v]}.to_h
+
     response
   end
 

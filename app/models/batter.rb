@@ -42,22 +42,22 @@ class Batter < ActiveRecord::Base
 
   def normalized(stat_method)
     case stat_method
-    when :tb
+    when "tb"
       min = stat_query("tb", "singles + doubles * 2 + triples * 3 + hr * 4", "min")
       max = stat_query("tb", "singles + doubles * 2 + triples * 3 + hr * 4", "max")
-    when :ppa
+    when "ppa"
       min = stat_query("ppa", "pitches / pa", "min")
       max = stat_query("ppa", "pitches / pa", "max")
-    when :rc
+    when "rc"
       min = stat_query("rc", "r + rbi - hr", "min")
       max = stat_query("rc", "r + rbi - hr", "max")
-    when :sbn
+    when "sbn"
       min = stat_query("sbn", "sb - cs", "min")
       max = stat_query("sbn", "sb - cs", "max")
-    when :sac
+    when "sac"
       min = stat_query("sac", "sh + sf", "min")
       max = stat_query("sac", "sh + sf", "max")
-    when :xbh
+    when "xbh"
       min = stat_query("xbh", "doubles + triples + hr", "min")
       max = stat_query("xbh", "doubles + triples + hr", "max")
     else

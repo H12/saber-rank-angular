@@ -1,6 +1,6 @@
 class Batter < ActiveRecord::Base
 
-  BAD_STATS = [:so, :cs, :gdp]
+  BAD_STATS = ['so', 'cs', 'gdp']
 
   def as_json(options = {})
     response = {'name' => name, 'team' => team}

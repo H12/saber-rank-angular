@@ -8,14 +8,11 @@ class Batter < ActiveRecord::Base
     response.each { |key, value| response[key] = sprintf('%.3f', value) if value.is_a?(Float) }
     stat_value = 0
     options[:stats].each do |stat|
-      response["n_#{stat.to_s}"] = sprintf('%.2f', normalized(stat))
       stat_value += normalized(stat).to_f
     end
     response['stat'] = ((stat_value * 60 / options[:stats].length) + 20).to_i
-
-    mappings = {'singles' => '1b', 'doubles' => '2b', 'triples' => '3b', 'pitches' => 'p', 'n_singles' => 'n_1b', 'n_doubles' => 'n_2b', 'n_triples' => 'n_3b', 'n_pitches' => 'n_p'}
+    mappings = {'singles' => 's', 'doubles' => 'd', 'triples' => 't', 'pitches' => 'p'}
     response = response.map {|k,v| mappings.keys.include?(k) ? [mappings[k], v] : [k,v]}.to_h
-
     response
   end
 

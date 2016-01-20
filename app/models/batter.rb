@@ -8,10 +8,10 @@ class Batter < ActiveRecord::Base
     response.each { |key, value| response[key] = sprintf('%.3f', value) if value.is_a?(Float) }
     stat_value = 0
     options[:stats].each do |stat|
-      response[:"n_#{stat.to_s}"] = sprintf('%.2f', normalized(stat))
+      response["n_#{stat.to_s}"] = sprintf('%.2f', normalized(stat))
       stat_value += normalized(stat).to_f
     end
-    response[:stat] = sprintf('%.2f', stat_value)
+    response['stat'] = ((stat_value * 60 / options[:stats].length) + 20).to_i
 
     response
   end

@@ -4,7 +4,6 @@ app.controller('BattersController', ['$scope', '$http', 'batters', function($sco
   batters.success(function(data) {
     $scope.batters = data;
   });
-
   $scope.stats = ['avg','hr','r','rbi','sb','slg','obp','ops','so','singles','doubles','triples','ab','bb','cs','gdp','h','hbp','ibb','pitches','pa','sf','sh','tb','ppa','rc','sbn','sac','xbh']
   $scope.sortType = 'stat';
   $scope.sortDesc = true;
@@ -21,17 +20,22 @@ app.controller('BattersController', ['$scope', '$http', 'batters', function($sco
     $('#selected option').each(function() {
       selectedStats.push($(this).val());
     });
-    $http({
-      method: 'GET',
-      url: '/batters',
-      params: {stats: JSON.stringify(selectedStats)}
-    })
-    .success(function(data) {
-      $scope.batters = data;
-    })
-    .error(function(err) {
-      return err;
-    });
+    if (selectedStats.length > 15) {
+      alert("Please select 15 or fewer stats.");
+      $scope.removeOptions();
+    } else {
+      $http({
+        method: 'GET',
+        url: '/batters',
+        params: {stats: JSON.stringify(selectedStats)}
+      })
+      .success(function(data) {
+        $scope.batters = data;
+      })
+      .error(function(err) {
+        return err;
+      });
+    }
   };
   $scope.addOptions = function() {
     var optionsToAdd = $("#available").find("option:selected");

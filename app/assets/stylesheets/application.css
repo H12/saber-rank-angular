@@ -13,21 +13,49 @@
  *= require_tree .
  *= require_self
  */
-#available, #selected, #buttons {
-  width: 20%;
-  margin: 16px 5%;
-  float: left;
+
+body {
+  background-color: gainsboro;
 }
 
-select {
-  height: 120px!important;
+table {
+  font-size: 13px;
+  margin-bottom: 0px!important;
+}
+
+.container-fluid {
+  width: 1150px;
+  padding-right: 0;
+  padding-left: 0;
+
+  background-color: white;
+}
+
+#stat-select {
+  display: flex;
+
+  padding: 16px 0;
+
+  justify-content: space-around;
+}
+
+#available,
+#selected,
+#buttons {
+  width: 240px;
 }
 
 #buttons {
-  width: 10%;
+  width: 120px;
+}
+
+select {
+  height: 134px!important;
 }
 
 #buttons button {
-  margin: 8px auto;
   display: block;
+
+  width: 60px;
+  margin: 8px auto;
 }

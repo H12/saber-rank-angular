@@ -23,6 +23,7 @@ app.controller('BattersController', ['$scope', '$http', 'batters', function($sco
     if (selectedStats.length > 15) {
       alert("Please select 15 or fewer stats.");
       $scope.removeOptions();
+      $scope.sortStatOptions("#available");
     } else {
       $http({
         method: 'GET',

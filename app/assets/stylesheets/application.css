@@ -12,6 +12,7 @@
  *
  *= require_tree .
  *= require_self
+ *= require bootstrap-slider
  */
 
 body {
@@ -58,4 +59,17 @@ select {
 
   width: 60px;
   margin: 8px auto;
+}
+
+#slider-container {
+  margin: auto;
+  text-align: center;
+}
+
+#playtimeSlider {
+  width: 420px;
+}
+
+b {
+  color: #333;
 }

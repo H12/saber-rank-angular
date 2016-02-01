@@ -44,6 +44,8 @@ GEM
     arel (6.0.3)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
+    bootstrap-slider-rails (6.0.10)
+      railties (>= 3.2, < 5.0)
     builder (3.2.2)
     byebug (8.2.1)
     coffee-rails (4.1.0)
@@ -161,6 +163,7 @@ PLATFORMS
 DEPENDENCIES
   angular-rails-templates (~> 0.2.0)
   angularjs-rails (~> 1.4, >= 1.4.7)
+  bootstrap-slider-rails (~> 6.0)
   byebug
   coffee-rails (~> 4.1.0)
   jbuilder (~> 2.0)

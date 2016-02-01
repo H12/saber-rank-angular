@@ -56,6 +56,13 @@ app.controller('BattersController', ['$scope', '$http', 'batters', function($sco
     $(fieldId + " option").remove();
     $(fieldId + " select").append(sorted);
   };
+  $scope.setSlider = function() {
+    $('#playtime').slider({
+      formatter: function(value) {
+        return "Min: " + value + " PA";
+      }
+    });
+  };
 }]);
 
 app.factory('batters', ['$http', function($http) {

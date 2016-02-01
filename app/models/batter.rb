@@ -49,46 +49,46 @@ class Batter < ActiveRecord::Base
     (BAD_STATS.include? stat_method) ? 1 - result : result
   end
 
-  def self.stat_min(stat_method)
+  def self.stat_min(stat_method, min_pa)
     case stat_method
     when "tb"
-      Batter.stat_query("tb", "singles + doubles * 2 + triples * 3 + hr * 4", "MIN")
+      Batter.stat_query("tb", "singles + doubles * 2 + triples * 3 + hr * 4", "MIN", min_pa)
     when "ppa"
-      Batter.stat_query("ppa", "pitches / pa", "MIN")
+      Batter.stat_query("ppa", "pitches / pa", "MIN", min_pa)
     when "rc"
-      Batter.stat_query("rc", "r + rbi - hr", "MIN")
+      Batter.stat_query("rc", "r + rbi - hr", "MIN", min_pa)
     when "sbn"
-      Batter.stat_query("sbn", "sb - cs", "MIN")
+      Batter.stat_query("sbn", "sb - cs", "MIN", min_pa)
     when "sac"
-      Batter.stat_query("sac", "sh + sf", "MIN")
+      Batter.stat_query("sac", "sh + sf", "MIN", min_pa)
     when "xbh"
-      Batter.stat_query("xbh", "doubles + triples + hr", "MIN")
+      Batter.stat_query("xbh", "doubles + triples + hr", "MIN", min_pa)
     else
-      Batter.minimum(stat_method)
+      Batter.where('pa > 500').minimum(stat_method)
     end
   end
 
-  def self.stat_max(stat_method)
+  def self.stat_max(stat_method, min_pa)
     case stat_method
     when "tb"
-      Batter.stat_query("tb", "singles + doubles * 2 + triples * 3 + hr * 4", "MAX")
+      Batter.stat_query("tb", "singles + doubles * 2 + triples * 3 + hr * 4", "MAX", min_pa)
     when "ppa"
-      Batter.stat_query("ppa", "pitches / pa", "MAX")
+      Batter.stat_query("ppa", "pitches / pa", "MAX", min_pa)
     when "rc"
-      Batter.stat_query("rc", "r + rbi - hr", "MAX")
+      Batter.stat_query("rc", "r + rbi - hr", "MAX", min_pa)
     when "sbn"
-      Batter.stat_query("sbn", "sb - cs", "MAX")
+      Batter.stat_query("sbn", "sb - cs", "MAX", min_pa)
     when "sac"
-      Batter.stat_query("sac", "sh + sf", "MAX")
+      Batter.stat_query("sac", "sh + sf", "MAX", min_pa)
     when "xbh"
-      Batter.stat_query("xbh", "doubles + triples + hr", "MAX")
+      Batter.stat_query("xbh", "doubles + triples + hr", "MAX", min_pa)
     else
-      Batter.maximum(stat_method)
+      Batter.where('pa > 500').maximum(stat_method)
     end
   end
 
-  def self.stat_query(column_name, calculation, option)
-    ActiveRecord::Base.connection.execute("SELECT #{option}(#{calculation}) AS #{column_name} FROM batters")[0][column_name].to_f
+  def self.stat_query(column_name, calculation, option, min_pa)
+    ActiveRecord::Base.connection.execute("SELECT #{option}(#{calculation}) AS #{column_name} FROM batters WHERE pa > #{min_pa}")[0][column_name].to_f
   end
 
 end

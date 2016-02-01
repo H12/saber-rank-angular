@@ -8,7 +8,7 @@ class Batter < ActiveRecord::Base
     response.each { |key, value| response[key] = sprintf('%.3f', value) if value.is_a?(Float) }
     stat_value = 0
     options[:stats].each do |stat|
-      stat_value += normalized(stat).to_f
+      stat_value += normalize(stat, stat_min(stat), stat_max(stat)).to_f
     end
     response['stat'] = ((stat_value * 60 / options[:stats].length) + 20).to_i
     mappings = {'singles' => 's', 'doubles' => 'd', 'triples' => 't', 'pitches' => 'p'}
@@ -40,31 +40,45 @@ class Batter < ActiveRecord::Base
     doubles + triples + hr
   end
 
-  def normalized(stat_method)
+  def stat_min(stat_method)
     case stat_method
     when "tb"
-      min = stat_query("tb", "singles + doubles * 2 + triples * 3 + hr * 4", "min")
-      max = stat_query("tb", "singles + doubles * 2 + triples * 3 + hr * 4", "max")
+      stat_query("tb", "singles + doubles * 2 + triples * 3 + hr * 4", "min")
     when "ppa"
-      min = stat_query("ppa", "pitches / pa", "min")
-      max = stat_query("ppa", "pitches / pa", "max")
+      stat_query("ppa", "pitches / pa", "min")
     when "rc"
-      min = stat_query("rc", "r + rbi - hr", "min")
-      max = stat_query("rc", "r + rbi - hr", "max")
+      stat_query("rc", "r + rbi - hr", "min")
     when "sbn"
-      min = stat_query("sbn", "sb - cs", "min")
-      max = stat_query("sbn", "sb - cs", "max")
+      stat_query("sbn", "sb - cs", "min")
     when "sac"
-      min = stat_query("sac", "sh + sf", "min")
-      max = stat_query("sac", "sh + sf", "max")
+      stat_query("sac", "sh + sf", "min")
     when "xbh"
-      min = stat_query("xbh", "doubles + triples + hr", "min")
-      max = stat_query("xbh", "doubles + triples + hr", "max")
+      stat_query("xbh", "doubles + triples + hr", "min")
     else
-      min = Batter.minimum(stat_method)
-      max = Batter.maximum(stat_method)
+      Batter.minimum(stat_method)
     end
+  end
 
+  def stat_max(stat_method)
+    case stat_method
+    when "tb"
+      stat_query("tb", "singles + doubles * 2 + triples * 3 + hr * 4", "max")
+    when "ppa"
+      stat_query("ppa", "pitches / pa", "max")
+    when "rc"
+      stat_query("rc", "r + rbi - hr", "max")
+    when "sbn"
+      stat_query("sbn", "sb - cs", "max")
+    when "sac"
+      stat_query("sac", "sh + sf", "max")
+    when "xbh"
+      stat_query("xbh", "doubles + triples + hr", "max")
+    else
+      Batter.maximum(stat_method)
+    end
+  end
+
+  def normalize(stat_method, min, max)
     result = ((method(stat_method).call.to_f - min) / (max - min))
     (BAD_STATS.include? stat_method) ? 1 - result : result
   end

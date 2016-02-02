@@ -4,6 +4,7 @@ app.controller('BattersController', ['$scope', '$http', 'batters', function($sco
   batters.success(function(data) {
     $scope.batters = data;
   });
+  $scope.minPa = 500;
   $scope.stats = ['avg','hr','r','rbi','sb','slg','obp','ops','so','singles','doubles','triples','ab','bb','cs','gdp','h','hbp','ibb','pitches','pa','sf','sh','tb','ppa','rc','sbn','sac','xbh']
   $scope.sortType = 'stat';
   $scope.sortDesc = true;
@@ -28,7 +29,7 @@ app.controller('BattersController', ['$scope', '$http', 'batters', function($sco
       $http({
         method: 'GET',
         url: '/batters',
-        params: {stats: JSON.stringify(selectedStats)}
+        params: {stats: JSON.stringify(selectedStats), min_pa: JSON.stringify($scope.minPa)}
       })
       .success(function(data) {
         $scope.batters = data;
@@ -56,6 +57,19 @@ app.controller('BattersController', ['$scope', '$http', 'batters', function($sco
     $(fieldId + " option").remove();
     $(fieldId + " select").append(sorted);
   };
+  $scope.setSlider = function() {
+    $('#playtime').slider({
+      formatter: function(value) {
+        return "Min: " + value + " PA";
+      }
+    })
+  };
+  $('#playtime').slider()
+    .on('slideStop', function() {
+      $scope.minPa = $(this).slider('getValue');
+      $scope.$apply();
+      $scope.updateBatters();
+    });
 }]);
 
 app.factory('batters', ['$http', function($http) {

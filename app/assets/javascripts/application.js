@@ -13,5 +13,6 @@
 //= require jquery
 //= require jquery_ujs
 //= require twitter/bootstrap
+//= require bootstrap-slider
 //= require angular
 //= require_tree .

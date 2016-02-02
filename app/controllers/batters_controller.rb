@@ -1,6 +1,5 @@
 class BattersController < ApplicationController
   def index
-    p params[:min_pa]
     params[:min_pa] ||= 500
     @batters = Batter.where("pa >= :min_pa", {min_pa: params[:min_pa]})
 

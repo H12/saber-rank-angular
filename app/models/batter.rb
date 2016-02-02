@@ -64,7 +64,7 @@ class Batter < ActiveRecord::Base
     when "xbh"
       Batter.stat_query("xbh", "doubles + triples + hr", "MIN", min_pa)
     else
-      Batter.where('pa > 500').minimum(stat_method)
+      Batter.where("pa > #{min_pa}").minimum(stat_method)
     end
   end
 
@@ -83,7 +83,7 @@ class Batter < ActiveRecord::Base
     when "xbh"
       Batter.stat_query("xbh", "doubles + triples + hr", "MAX", min_pa)
     else
-      Batter.where('pa > 500').maximum(stat_method)
+      Batter.where("pa > #{min_pa}").maximum(stat_method)
     end
   end
 

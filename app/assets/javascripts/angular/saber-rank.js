@@ -29,7 +29,7 @@ app.controller('BattersController', ['$scope', '$http', 'batters', function($sco
       $http({
         method: 'GET',
         url: '/batters',
-        params: {stats: JSON.stringify(selectedStats)}
+        params: {stats: JSON.stringify(selectedStats), min_pa: JSON.stringify($scope.minPa)}
       })
       .success(function(data) {
         $scope.batters = data;
@@ -65,9 +65,10 @@ app.controller('BattersController', ['$scope', '$http', 'batters', function($sco
     })
   };
   $('#playtime').slider()
-    .on('slide', function() {
+    .on('slideStop', function() {
       $scope.minPa = $(this).slider('getValue');
       $scope.$apply();
+      $scope.updateBatters();
     });
 }]);
 

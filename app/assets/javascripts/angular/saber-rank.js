@@ -4,6 +4,7 @@ app.controller('BattersController', ['$scope', '$http', 'batters', function($sco
   batters.success(function(data) {
     $scope.batters = data;
   });
+  $scope.minPa = 500;
   $scope.stats = ['avg','hr','r','rbi','sb','slg','obp','ops','so','singles','doubles','triples','ab','bb','cs','gdp','h','hbp','ibb','pitches','pa','sf','sh','tb','ppa','rc','sbn','sac','xbh']
   $scope.sortType = 'stat';
   $scope.sortDesc = true;
@@ -61,8 +62,13 @@ app.controller('BattersController', ['$scope', '$http', 'batters', function($sco
       formatter: function(value) {
         return "Min: " + value + " PA";
       }
-    });
+    })
   };
+  $('#playtime').slider()
+    .on('slide', function() {
+      $scope.minPa = $(this).slider('getValue');
+      $scope.$apply();
+    });
 }]);
 
 app.factory('batters', ['$http', function($http) {
